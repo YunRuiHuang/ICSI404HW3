@@ -1,3 +1,7 @@
+/**
+ * @author Yunrui Huang
+ * 12/13/2021
+ */
 public class Computer {
 
     private Boolean haltedFlag;
@@ -14,6 +18,10 @@ public class Computer {
     private LongWord result;
     private LongWord branch;
 
+    /**
+     * the constructor of Computer class
+     *
+     */
     public Computer(){
         this.haltedFlag = false;
         this.alu = new ALU();
@@ -32,6 +40,13 @@ public class Computer {
         this.branch = new LongWord();
     }
 
+    /**
+     * the run method of Computer class
+     * Set the PC start at 0
+     * use the preload method to load data into memory(check ReadMe Doc.)
+     * run fetch > decode > execute > store > ...
+     * stop when haltedFlag is true
+     */
     public void run(){
         this.PC.set(0);
         this.memory.preload();
@@ -45,12 +60,19 @@ public class Computer {
         }
     }
 
+    /**
+     * the Fetch method use to load the IR from memory and add a step to PC
+     */
     private void fetch(){
         this.IR = this.memory.read(this.PC,2);
         System.out.println("IR CODE > " + this.IR.toString());
         this.PC.set((this.PC.getSigned() + 2));
     }
 
+    /**
+     * The decode method use to decode the IR which read from memory
+     * After decode everything will hold by OP1, OP2, OPCode, storeAddress, result, and branch
+     */
     private void decode(){
         LongWord delete = new LongWord();
         delete.set(0);
@@ -112,6 +134,9 @@ public class Computer {
         }
     }
 
+    /**
+     * The execute method use to execute the operate which new hold by OPCode
+     */
     private void execute(){
         if(this.OPCode.getBit(3)){
             this.OP1.copy(this.register[this.OP1.getSigned()]);
@@ -167,6 +192,10 @@ public class Computer {
         }
     }
 
+    /**
+     * The store method use to store the data into register
+     * Only Arithmetic and Logic instructions would store data
+     */
     private void store(){
         if(this.OPCode.getBit(3)){
             this.register[this.storeAddress.getSigned()].copy(this.result);

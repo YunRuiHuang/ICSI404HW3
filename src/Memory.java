@@ -1,8 +1,15 @@
+/**
+ * @author Yunrui Huang
+ * 12/13/2021
+ */
 public class Memory {
 
     private final int memorySize = 256;
     private byte[] memory;
 
+    /**
+     * the constructor of Memory class
+     */
     public Memory(){
         this.memory = new byte[memorySize];
         for (int i = 0; i < memorySize; i++) {
@@ -10,6 +17,11 @@ public class Memory {
         }
     }
 
+    /**
+     * the Preload method use for testing the Computer class
+     * About this method I write the ReadMe
+     * Please check the ReadMe
+     */
     public void preload(){
         this.memory[8]=16;
         LongWord longWord = new LongWord();
@@ -52,6 +64,15 @@ public class Memory {
         write(address,longWord,2);
     }
 
+    /**
+     * The read method use to read the data from the memory
+     * @param address
+     * A LongWord use to point the address, which unsign number should less than 255
+     * @param numBytes
+     * A Integer to define how many byte need to read, should less or equal to 4
+     * @return
+     * A LonwWord to hold the data from memory, the first Byte would put at the most left place
+     */
     public LongWord read(LongWord address, int numBytes){
         int local = address.getSigned();
         LongWord longWord = new LongWord();
@@ -77,6 +98,15 @@ public class Memory {
         return longWord;
     }
 
+    /**
+     * The write method use to write the data into memory
+     * @param address
+     * A LongWord use to point the address, which unsign number should less than 255
+     * @param word
+     * A LongWord which hold the data read to write into memory
+     * @param numBytes
+     * A Integer to define how many byte need to read, should less or equal to 4
+     */
     public void write(LongWord address, LongWord word, int numBytes){
         int local = address.getSigned();
         LongWord longWord = new LongWord();
@@ -97,6 +127,11 @@ public class Memory {
 
     }
 
+    /**
+     * OverWrite the toString method
+     * @return
+     * return all data in the memory as string
+     */
     public String toString(){
         String string = "";
 
